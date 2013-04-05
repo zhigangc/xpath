@@ -1,31 +1,31 @@
-package xnode
+package node
 
 import "htmlparser"
 
-type XPathNode struct {
+type Node struct {
 	node *html.Node
 	attribute *html.Attribute
 }
 
-func (n *XPathNode) Node() *html.Node {
+func (n *Node) Node() *html.Node {
 	if n.attribute != nil {
 		return nil
 	}
 	return n.node
 }
 
-func (n *XPathNode) Attribute() *html.Attribute {
+func (n *Node) Attribute() *html.Attribute {
 	return n.attribute
 }
 
-func (n *XPathNode) Parent() *html.Node {
+func (n *Node) Parent() *html.Node {
 	if n.attribute != nil {
 		return n.node
 	}
 	return n.node.Parent
 }
 
-func (n *XPathNode) String() string {
+func (n *Node) String() string {
 	if n.attribute != nil {
 		return n.attribute.Val
 	}

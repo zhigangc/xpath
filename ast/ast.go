@@ -2,18 +2,18 @@ package ast
 
 import "math"
 import "strings"
-import "xpath/node"
+import xnode "xpath/node"
 
-type ast_node struct {
+type AstNode struct {
 	Type byte
 	RetType byte
 
 	axis byte
 	test byte
 
-	left *ast_node
-	right *ast_node
-	next *ast_node
+	left *AstNode
+	right *AstNode
+	next *AstNode
 
 	data interface{}
 }
@@ -34,7 +34,23 @@ func less_equal(a, b interface{}) bool {
 	return true
 }
 
-func (n *ast_node) eval_boolean(xctx *XPathContext) bool {
+func (n *AstNode) set_next(value *AstNode) {
+	n.next = value
+}
+
+func (n *AstNode) set_right(value *AstNode) {
+	n.right = value
+}
+
+func NewAstNode(typ, rettyp byte, value interface{}) *AstNode {
+	ast := &AstNode{}
+	ast.Type = typ
+	ast.RetType = rettyp
+	ast.data = value
+	return ast
+}
+
+func (n *AstNode) eval_boolean(xctx *Context) bool {
 	switch n.Type {
 	case ast_op_or:
 		return n.left.eval_boolean(xctx) || n.right.eval_boolean(xctx)
@@ -136,11 +152,11 @@ func (n *ast_node) eval_boolean(xctx *XPathContext) bool {
 }
 
 
-func (n *ast_node) eval_string(xctx *XPathContext) string {
+func (n *AstNode) eval_string(xctx *Context) string {
 	return ""
 }
 
-func (n *ast_node) eval_number(xctx *XPathContext) float64 {
+func (n *AstNode) eval_number(xctx *Context) float64 {
 	switch n.Type {
 	case ast_op_add:
 		return n.left.eval_number(xctx) + n.right.eval_number(xctx)
@@ -247,7 +263,7 @@ func (n *ast_node) eval_number(xctx *XPathContext) float64 {
 	return 0
 }
 
-func (n *ast_node) eval_node_set(xctx *XPathContext) []*xnode.XPathNode {
+func (n *AstNode) eval_node_set(xctx *Context) []*xnode.Node {
 	return nil
 }
 

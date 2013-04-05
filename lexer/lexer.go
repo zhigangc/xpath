@@ -34,7 +34,7 @@ const strterm = 0
 
 type lexeme_t int
 
-type XPathLexer struct {
+type Lexer struct {
 	query string
 	cur int
 	cur_lexeme_pos int
@@ -43,20 +43,20 @@ type XPathLexer struct {
 	cur_lexeme lexeme_t
 }
 
-func NewXPathLexer(query string) *lexer {
-	lx := &XPathLexer{query: query}
+func NewLexer(query string) *Lexer {
+	lx := &Lexer{query: query}
 	lx.next()
 	return lx
 }
 
-func (lx *lexer) at(i int) byte {
+func (lx *Lexer) at(i int) byte {
 	if i < len(lx.query) {
 		return lx.query[i]
 	}
 	return strterm
 }
 
-func (lx *lexer) next() {
+func (lx *Lexer) next() {
 	cur := lx.cur
 
 	for ; isCharType(lx.at(cur), ct_space); cur++ {}
@@ -223,7 +223,7 @@ func (lx *lexer) next() {
 	lx.cur = cur
 }
 
-func (lx *lexer) current() lexeme_t {
+func (lx *Lexer) current() lexeme_t {
 	return lx.cur_lexeme
 }
 /*

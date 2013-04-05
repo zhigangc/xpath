@@ -2,7 +2,7 @@ package ast
 
 type compareFunc func(interface{}, interface{}) bool
 
-func compare_eq(lhs, rhs *ast_node, xctx *XPathContext, comp compareFunc) bool {
+func compare_eq(lhs, rhs *AstNode, xctx *Context, comp compareFunc) bool {
 	lt := lhs.RetType
 	rt := rhs.RetType
 
@@ -67,7 +67,7 @@ func compare_eq(lhs, rhs *ast_node, xctx *XPathContext, comp compareFunc) bool {
 	return false;
 }
 
-func compare_rel(lhs, rhs *ast_node, xctx *XPathContext, comp compareFunc) bool {
+func compare_rel(lhs, rhs *AstNode, xctx *Context, comp compareFunc) bool {
 	lt := lhs.RetType
 	rt := rhs.RetType
 

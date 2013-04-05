@@ -89,3 +89,11 @@ const (
 	nodetest_all
 	nodetest_all_in_namespace
 )
+
+const (
+	xpath_type_none = iota	  // Unknown type (query failed to compile)
+	xpath_type_node_set  // Node set (xpath_node_set)
+	xpath_type_number	  // Number
+	xpath_type_string	  // String
+	xpath_type_boolean	  // Boolean
+)
